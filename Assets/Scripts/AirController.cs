@@ -1,4 +1,5 @@
 using System;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 public class AirController : MonoBehaviour
@@ -11,6 +12,7 @@ public class AirController : MonoBehaviour
     [SerializeField] private Transform _referencePoint;
     [SerializeField] private float _flySpeed = 50;
     [SerializeField] private float _yawAround = 75;
+    [SerializeField] private MMFeedbacks _mmFeedbacks;
     
     private float _yaw; 
     private float _targetPitch;
@@ -44,6 +46,7 @@ public class AirController : MonoBehaviour
         foreach (var point in _firePoint)
         {
             _ammoSpawner.FireBullet(point.position, _referencePoint.position, point.rotation);
+            _mmFeedbacks.PlayFeedbacks();
         }
     }
 }

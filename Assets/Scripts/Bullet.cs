@@ -10,10 +10,14 @@ namespace DefaultNamespace
         private Rigidbody _rigidbody;
         
         [SerializeField] private float _force = 100f;
+        [SerializeField] private float _damage;
+        [SerializeField] private ParticleSystem _particle;
+        
         private const float _lifetime = 0.8f;
         private float _timeSinceActivated;
         private bool _isMoving;
-        
+       
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -42,6 +46,17 @@ namespace DefaultNamespace
             if (_timeSinceActivated >= _lifetime)
             {
                   Deactivate();
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            var enemyHp = collision.gameObject.GetComponent<EnemyHp>();
+            if (enemyHp != null)
+            {
+                enemyHp.TakeDamage(_damage);
+                _particle.Play();
+              //  Deactivate();
             }
         }
     }
